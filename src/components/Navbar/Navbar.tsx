@@ -1,10 +1,13 @@
 'use client';
 
-import { Button } from '@mui/material';
+import { Button, IconButton, Drawer, Box } from '@mui/material';
 import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import BasicModal from '../Modal/BasicModal';
+import { Image } from '../Image/index';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import logo from '@/../public/imageStore/nfty-logo.png';
 
 interface NavbarProps {
   session: any;
@@ -14,33 +17,118 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const toggleDrawer = () => setIsOpen(!isOpen);
 
   return (
-    <div className="flex justify-end pb-4 shadow-md">
-      {session ? (
-        <Button
-          type="button"
-          variant="contained"
-          color="error"
-          sx={{ mt: 2 }}
-          onClick={() => signOut({ callbackUrl: '/auth/login' })}
+    <header className="flex justify-between items-center px-4 py-4 shadow-md bg-white">
+      {/* Lado Izquierdo */}
+      <div className="flex items-center">
+        <Image src={logo.src} alt="Logo" width={150} height={55} />
+      </div>
+
+      {/* Menú en dispositivos pequeños */}
+      <div className="md:hidden">
+        <IconButton onClick={toggleDrawer}>
+          <MenuIcon />
+        </IconButton>
+      </div>
+
+      {/* Lado Derecho (Desktop) */}
+      <div className="hidden md:flex items-center gap-4">
+        {session ? (
+          <Button
+            type="button"
+            variant="contained"
+            color="error"
+            sx={{
+              padding: '8px 12px',
+              minWidth: '120px',
+            }}
+            onClick={() => signOut({ callbackUrl: '/auth/login' })}
+          >
+            Cerrar Sesión
+          </Button>
+        ) : (
+          <>
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              sx={{
+                padding: '8px 12px',
+                minWidth: '120px',
+              }}
+              onClick={() => router.push('/auth/login')}
+            >
+              Iniciar Sesión
+            </Button>
+            <div className="h-6 w-px bg-gray-300"></div>
+            <Button
+              type="button"
+              variant="outlined"
+              color="secondary"
+              sx={{
+                padding: '8px 12px',
+                minWidth: '120px',
+              }}
+              onClick={() => router.push('/auth/register')}
+            >
+              Registrarse
+            </Button>
+          </>
+        )}
+      </div>
+
+      {/* Drawer para dispositivos móviles */}
+      <Drawer anchor="right" open={isOpen} onClose={toggleDrawer}>
+        <Box
+          sx={{
+            width: 250,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            p: 2,
+          }}
         >
-          Cerrar Sesión
-        </Button>
-      ) : (
-        <Button
-          type="button"
-          variant="outlined"
-          color="primary"
-          sx={{ mt: 2 }}
-          onClick={() => router.push('/auth/login')}
-        >
-          Iniciar Sesión
-        </Button>
-      )}
-    </div>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold">Menú</h2>
+            <IconButton onClick={toggleDrawer}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+
+          {session ? (
+            <Button
+              type="button"
+              variant="contained"
+              color="error"
+              onClick={() => signOut({ callbackUrl: '/auth/login' })}
+            >
+              Cerrar Sesión
+            </Button>
+          ) : (
+            <>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                onClick={() => router.push('/auth/login')}
+              >
+                Iniciar Sesión
+              </Button>
+              <Button
+                type="button"
+                variant="outlined"
+                color="secondary"
+                onClick={() => router.push('/auth/register')}
+              >
+                Registrarse
+              </Button>
+            </>
+          )}
+        </Box>
+      </Drawer>
+    </header>
   );
 };
 

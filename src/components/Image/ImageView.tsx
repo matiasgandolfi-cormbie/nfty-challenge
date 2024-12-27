@@ -3,9 +3,9 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import Image from 'next/image';
-import { ImageProps } from '.';
+import { ImageViewProps } from './types';
 
-const ImageView: React.FC<ImageProps> = ({ src, alt, width = 200, height = 200, rounded = false, onClick }) => {
+const ImageView: React.FC<ImageViewProps> = ({ src, alt, width = 200, height = 200, rounded = false, onClick }) => {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ const ImageView: React.FC<ImageProps> = ({ src, alt, width = 200, height = 200, 
       }}
       onClick={onClick}
     >
-      <Image src={src} alt={alt} width={width as number} height={height as number} />
+      <Image src={src} alt={src} width={width as number} height={height as number} />
     </Box>
   );
 };

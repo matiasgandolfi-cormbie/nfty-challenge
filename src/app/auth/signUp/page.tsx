@@ -35,7 +35,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center py-6'>
       {error && (
         <div className="p-2 mb-4 text-red-700 bg-red-100 rounded-md">
           {error}
