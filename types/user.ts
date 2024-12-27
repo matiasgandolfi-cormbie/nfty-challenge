@@ -1,0 +1,15 @@
+import { Loan } from "./loan";
+
+export type User = {
+    id? : number;     
+    firstName : string;
+    lastName : string;
+    email : string;
+    address : string;
+    birthDate : Date;
+    phoneNumber : string;
+    password : string;
+    role: string;
+    createdAt : Date;
+    loans? : Loan[]
+}
