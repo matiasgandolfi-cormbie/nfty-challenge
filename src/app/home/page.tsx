@@ -29,7 +29,8 @@ const Page = async () => {
       ) : (
         <p>No has iniciado sesión.</p>
       )}
-      <LoanForm />
+        <p>Sesion iniciada</p>
+
     </div>
   );
 };

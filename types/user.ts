@@ -8,8 +8,8 @@ export type User = {
     address : string;
     birthDate : Date;
     phoneNumber : string;
-    password : string;
+    password? : string;
     role: string;
-    createdAt : Date;
+    createdAt? : Date;
     loans? : Loan[]
 }

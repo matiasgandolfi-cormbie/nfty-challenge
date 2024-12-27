@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const validationLoan = yup.object({
+export const loanValidation = yup.object({
   firstName: yup.string().required('El nombre es obligatorio').min(2, 'Mínimo 2 caracteres').matches(/^[a-zA-Z]+$/, 'Solo letras'),
   lastName: yup.string().required('El apellido es obligatorio').min(2).matches(/^[a-zA-Z]+$/, 'Solo letras'),
   email: yup.string().email('Correo inválido').required('Correo obligatorio'),

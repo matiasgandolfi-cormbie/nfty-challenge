@@ -13,6 +13,7 @@ export async function getUserByEmail(email : string) {
         address: true,
         birthDate: true,
         phoneNumber: true,
+        role: true
       }
     });
 
