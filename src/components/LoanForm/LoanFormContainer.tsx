@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LoanForm from './LoanForm';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,36 +9,48 @@ import { User } from '../../../types/user';
 import { loanValidation } from '@/app/validations/validationLoan';
 import BasicModal from '../Modal/BasicModal';
 import { Button } from '@mui/material';
+import { Loan } from '../../../types/loan';
 
 interface LoanFormContainerProps {
   user: User | null;
+  postLoan: (loanData: Loan) => Promise<void>;
 }
 
-const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user }) => {
+const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [hideLabels, setHideLabels] = useState(false); // Estado para ocultar labels
+  const [hideLabels, setHideLabels] = useState(false);
 
   const handleClose = () => setIsOpen(false);
 
-  const { control, handleSubmit, reset, watch, setValue } = useForm<LoanFormData>({
+  const { control, handleSubmit, reset, setValue } = useForm<LoanFormData>({
     resolver: yupResolver(loanValidation),
     mode: 'onBlur',
   });
+  console.log(user)
 
-  const formData = watch();
-
-  // Guarda los datos en localStorage cada vez que cambian
-  useEffect(() => {
-    localStorage.setItem('loanForm', JSON.stringify(formData));
-  }, [formData]);
-
-  // Enviar el formulario
   const onSubmit = (data: LoanFormData) => {
-    localStorage.setItem('loanForm', JSON.stringify(data));
-    alert('Formulario enviado con éxito');
+    try {
+      if (user?.id && data) {
+        const newLoan: Loan = {
+          userId: user.id,
+          loanAmount: data.loanAmount,
+          address: data.address,
+        };
+
+        console.log('➡️ Datos que se enviarán a postLoan:', newLoan);
+
+        postLoan(newLoan);
+
+        alert('✅ Préstamo registrado correctamente');
+        reset();
+        localStorage.removeItem('loanForm');
+      }
+    } catch (error) {
+      console.error('❌ Error al enviar el préstamo:', error);
+      alert('❌ Error inesperado al enviar el formulario');
+    }
   };
 
-  // Llenar formulario con datos del usuario autenticado
   const fillFormWithUserData = () => {
     if (user) {
       setValue('firstName', user.firstName || '');
@@ -48,8 +60,22 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user }) => {
       setValue('birthDate', user.birthDate || '');
       setValue('phoneNumber', user.phoneNumber || '');
     }
-    setHideLabels(true); // Ocultar labels después de llenar
+    setHideLabels(true);
     setIsOpen(false);
+  };
+
+  const onReset = () => {
+    const savedData = localStorage.getItem('loanForm');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      Object.keys(parsedData).forEach((key) => {
+        setValue(key as keyof LoanFormData, parsedData[key]);
+      });
+      alert('✅ Datos cargados desde LocalStorage');
+    } else {
+      reset();
+      alert('ℹ️ No hay datos guardados en LocalStorage');
+    }
   };
 
   return (
@@ -58,25 +84,10 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user }) => {
       <BasicModal title="Registro de Préstamo" open={isOpen} onClose={handleClose}>
         <p>¿Quiere llenar el formulario con los datos del usuario autenticado?</p>
         <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          {/* Botón "No": Cierra el modal */}
-          <Button
-            type="button"
-            variant="outlined"
-            color="secondary"
-            sx={{ mt: 2 }}
-            onClick={handleClose}
-          >
+          <Button type="button" variant="outlined" color="secondary" onClick={handleClose}>
             No
           </Button>
-
-          {/* Botón "Sí": Llena el formulario con datos del usuario */}
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2 }}
-            onClick={fillFormWithUserData}
-          >
+          <Button type="button" variant="contained" color="primary" onClick={fillFormWithUserData}>
             Sí
           </Button>
         </div>
@@ -86,7 +97,7 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user }) => {
       <LoanForm
         control={control}
         onSubmit={handleSubmit(onSubmit)}
-        onReset={() => reset()}
+        onReset={onReset}
         hideLabels={hideLabels}
       />
     </>

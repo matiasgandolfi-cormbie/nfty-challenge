@@ -9,11 +9,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   session: { strategy: "jwt" },
   callbacks: {
-    // jwt() se ejecuta cada vez que se crea o actualiza un token JWT
-    // Aqui puedes agregar informacion adicional al token
     jwt({ token, user }) {
-      if (user) { // El usuario estara disponible durante el login
+      if (user) {
         token.role = user.role;
+        token.id = user.id;
       }
       return token
     },
@@ -22,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session({ session, token }) {
       if(session.user) {
         session.user.role = token.role;
+        session.user.id = token.id;
       }
       return session
     },

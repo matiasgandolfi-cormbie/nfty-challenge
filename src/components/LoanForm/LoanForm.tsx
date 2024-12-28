@@ -3,12 +3,14 @@
 import React from 'react';
 import { Input } from '../Input';
 import { Box, Button, Typography } from '@mui/material';
+import { Control } from 'react-hook-form';
+import { LoanFormData } from './types';
 
 interface LoanFormProps {
-  control: any;
-  onSubmit: () => void;
-  onReset: () => void;
-  hideLabels?: boolean;
+  control: Control<LoanFormData>; // Control del formulario
+  onSubmit: () => void; // Función para enviar el formulario
+  onReset: () => void; // Función para restablecer el formulario
+  hideLabels?: boolean; // Prop opcional para ocultar etiquetas
 }
 
 const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLabels }) => {
@@ -23,7 +25,7 @@ const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLab
         <Input control={control} name="lastName" label={hideLabels ? '' : 'Apellido'} />
         <Input control={control} name="email" label={hideLabels ? '' : 'Correo Electrónico'} type="email" />
         <Input control={control} name="address" label={hideLabels ? '' : 'Dirección'} />
-        <Input control={control} name="loanAmount" label='Monto del Préstamo' type="number" />
+        <Input control={control} name="loanAmount" label="Monto del Préstamo" type="number" />
         <Input control={control} name="birthDate" label={hideLabels ? '' : 'Fecha de Nacimiento'} type="date" />
         <Input control={control} name="phoneNumber" label={hideLabels ? '' : 'Número de Teléfono'} type="tel" />
 

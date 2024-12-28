@@ -33,7 +33,8 @@ const RegisterFormContainer: React.FC<RegisterFormContainerProps> = ({ registerU
         address: data.address,
         birthDate: new Date(data.birthDate),
         phoneNumber: data.phoneNumber,
-        password: data.password,
+        password: "",
+        role: ""
       };
 
       const result = await registerUser(finalData);

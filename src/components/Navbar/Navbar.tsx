@@ -21,19 +21,16 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
 
   return (
     <header className="flex justify-between items-center px-4 py-4 shadow-md bg-white">
-      {/* Lado Izquierdo */}
       <div className="flex items-center">
         <Image src={logo.src} alt="Logo" width={150} height={55} />
       </div>
 
-      {/* Menú en dispositivos pequeños */}
       <div className="md:hidden">
         <IconButton onClick={toggleDrawer}>
           <MenuIcon />
         </IconButton>
       </div>
 
-      {/* Lado Derecho (Desktop) */}
       <div className="hidden md:flex items-center gap-4">
         {session ? (
           <Button
@@ -44,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
               padding: '8px 12px',
               minWidth: '120px',
             }}
-            onClick={() => signOut({ callbackUrl: '/auth/login' })}
+            onClick={() => signOut({ callbackUrl: '/auth/signIn' })}
           >
             Cerrar Sesión
           </Button>
@@ -58,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
                 padding: '8px 12px',
                 minWidth: '120px',
               }}
-              onClick={() => router.push('/auth/login')}
+              onClick={() => router.push('/auth/signIn')}
             >
               Iniciar Sesión
             </Button>
@@ -71,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
                 padding: '8px 12px',
                 minWidth: '120px',
               }}
-              onClick={() => router.push('/auth/register')}
+              onClick={() => router.push('/auth/signUp')}
             >
               Registrarse
             </Button>

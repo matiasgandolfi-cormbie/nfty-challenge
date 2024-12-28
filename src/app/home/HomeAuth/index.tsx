@@ -1,9 +1,15 @@
-import React from 'react'
+'use client';
+import React from 'react';
+import { Loan } from '../../../../types/loan';
 
-const index = () => {
-  return (
-    <div>index</div>
-  )
+interface HomeAuthProperties {
+  loan : Loan;
 }
 
-export default index
+const HomeAuth = () => {
+  return(
+    <p>asdsada</p>
+  )
+};
+
+export default HomeAuth;
