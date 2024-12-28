@@ -20,7 +20,7 @@ export default function RootLayout({
   session,
 }: {
   children: React.ReactNode;
-  session?: any; // Ajusta el tipo de sesión según NextAuth si es necesario
+  session?: any;
 }) {
   return (
     <html lang="en">
@@ -29,7 +29,9 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <StyledRoot>
               <Navbar/>
-              {children}
+              <div className='px-12'>
+                {children}
+              </div>
             </StyledRoot>
           </AppRouterCacheProvider>
         </SessionProvider>

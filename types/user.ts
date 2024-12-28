@@ -14,4 +14,4 @@ export type User = {
     loans?: Loan[];
 };
 
-export type UserDto = Omit<User, 'password' | 'createdAt' | 'birthDate' | 'address' | 'phoneNumber'>;
+export type UserDto = Omit<User, 'password' | 'createdAt'>;

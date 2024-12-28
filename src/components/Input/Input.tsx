@@ -1,18 +1,19 @@
 'use client';
 import React from 'react';
 import { TextField } from '@mui/material';
+import { InputProps } from './types';
 
-export interface InputProps {
-    name: string;
-    label: string;
-    type?: string;
-    value: string | number;
-    error?: string;
-    onChange: (value: string | number) => void;
-    onBlur?: () => void;
-  }
-  
-const Input: React.FC<InputProps> = ({ name, label, type = 'text', value, error, onChange, onBlur }) => {
+const Input: React.FC<InputProps> = ({
+  name,
+  label,
+  type = 'text',
+  value,
+  error,
+  onChange,
+  onBlur,
+}) => {
+  const maxDate = new Date().toISOString().split('T')[0];
+
   return (
     <TextField
       id={name}
@@ -26,6 +27,18 @@ const Input: React.FC<InputProps> = ({ name, label, type = 'text', value, error,
       onBlur={onBlur}
       error={!!error}
       helperText={error}
+      {...(type === 'date' && {
+        InputProps: {
+          inputProps: {
+            max: maxDate,
+          },
+        },
+      })}
+      {...(type === 'date' && {
+        InputLabelProps: {
+          shrink: true,
+        },
+      })}
     />
   );
 };

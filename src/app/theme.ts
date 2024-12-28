@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
 
 const theme = createTheme({
   typography: {
@@ -7,16 +6,33 @@ const theme = createTheme({
     h1: {
       fontFamily: `'Montserrat', sans-serif`,
       fontWeight: 600,
-      fontSize: 50,
       color: '#6767aa',
     },
     h2: {
       fontFamily: `'Montserrat', sans-serif`,
       fontWeight: 600,
+      color: '#6767aa',
+    },
+    h3: {
+      fontFamily: `'Montserrat', sans-serif`,
+      fontSize: 20,
+      fontWeight: 600,
+      color: '#6767aa',
+    },
+    h4: {
+      fontFamily: `'Montserrat', sans-serif`,
+      fontSize: 20,
+      fontWeight: 600,
+      color: '#6767aa',
     },
     body1: {
       fontFamily: `'Montserrat', sans-serif`,
     },
+    body2: {
+      fontFamily: `'Montserrat', sans-serif`,
+      fontSize: 17,
+      fontWeight: 600,
+      color: '#6767aa',    },
   },
   palette: {
     primary: {
