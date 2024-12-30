@@ -11,6 +11,7 @@ import BasicModal from '../Modal/BasicModal';
 import Alert from '../Alert';
 import { Button } from '@mui/material';
 import { Loan } from '../../../types/loan';
+import { useRouter } from 'next/navigation';
 
 interface LoanFormContainerProps {
   user: User | null;
@@ -18,14 +19,25 @@ interface LoanFormContainerProps {
 }
 
 const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true); 
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isPostLoanOpen, setIsPostLoanOpen] = useState(false);
   const [hideLabels, setHideLabels] = useState(false);
-  const [alert, setAlert] = useState<{ type: 'success' | 'error' | 'info'; title?: string; message: string; open: boolean }>({
+  const [loanPreview, setLoanPreview] = useState<LoanFormData | null>(null);
+
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error' | 'info';
+    title?: string;
+    message: string;
+    open: boolean;
+  }>({
     type: 'info',
     title: '',
     message: '',
     open: false,
   });
+
+  const router = useRouter();
 
   const handleCloseAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
@@ -57,48 +69,22 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan })
   }, [setValue]);
 
   useEffect(() => {
-    const subscription = () => {
+    const saveFormData = () => {
       const formData = getValues();
       localStorage.setItem('loanForm', JSON.stringify(formData));
     };
 
-    window.addEventListener('beforeunload', subscription);
+    window.addEventListener('beforeunload', saveFormData);
 
     return () => {
-      window.removeEventListener('beforeunload', subscription);
+      window.removeEventListener('beforeunload', saveFormData);
     };
   }, [getValues]);
 
-  const onSubmit = (data: LoanFormData) => {
-    try {
-      if (user?.id && data) {
-        const newLoan: Loan = {
-          userId: user.id,
-          loanAmount: data.loanAmount,
-          address: data.address,
-        };
-
-        postLoan(newLoan);
-
-        setAlert({
-          type: 'success',
-          title: 'Préstamo Registrado',
-          message: 'Préstamo registrado correctamente',
-          open: true,
-        });
-
-        reset();
-        localStorage.removeItem('loanForm');
-      }
-    } catch (error) {
-      console.error(' Error al enviar el préstamo:', error);
-      setAlert({
-        type: 'error',
-        title: 'Error',
-        message: 'Error inesperado al enviar el formulario',
-        open: true,
-      });
-    }
+  const handlePreSubmit = () => {
+    const formData = getValues();
+    setLoanPreview(formData);
+    setIsConfirmOpen(true);
   };
 
   const fillFormWithUserData = () => {
@@ -114,53 +100,96 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan })
     setIsOpen(false);
   };
 
-  const onReset = () => {
-    localStorage.removeItem('loanForm');
-    reset({
-      firstName: '',
-      lastName: '',
-      email: '',
-      address: '',
-      loanAmount: 0,
-      birthDate: new Date(),
-      phoneNumber: '',
-    });
-    setAlert({
-      type: 'info',
-      title: 'Formulario Restablecido',
-      message: 'Formulario restablecido correctamente',
-      open: true,
-    });
+  const onSubmit = async () => {
+    setIsConfirmOpen(false);
+
+    try {
+      if (user?.id && loanPreview) {
+        const newLoan: Loan = {
+          userId: user.id,
+          loanAmount: loanPreview.loanAmount,
+          address: loanPreview.address,
+        };
+
+        await postLoan(newLoan);
+
+        setAlert({
+          type: 'success',
+          title: 'Préstamo Registrado',
+          message: '¡Préstamo registrado correctamente!',
+          open: true,
+        });
+
+        reset();
+        setLoanPreview(null);
+        localStorage.removeItem('loanForm');
+
+        setTimeout(() => {
+          setIsPostLoanOpen(true);
+        }, 500);
+      }
+    } catch (error: any) {
+      console.error('Error al enviar el préstamo:', error);
+      setAlert({
+        type: 'error',
+        title: 'Error',
+        message: 'Error inesperado al enviar el formulario',
+        open: true,
+      });
+    }
+  };
+
+  const redirectToHome = () => {
+    router.push('/');
   };
 
   return (
     <>
-      <BasicModal title="Registro de Préstamo" open={isOpen} onClose={handleClose}>
-        <p>¿Quiere llenar el formulario con los datos del usuario autenticado?</p>
+      <BasicModal title="Solicitud de Préstamo" open={isOpen} onClose={handleClose}>
+        <p>¿Desea llenar el formulario con los datos del usuario autenticado?</p>
         <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <Button type="button" variant="outlined" color="secondary" onClick={handleClose}>
+          <Button variant="outlined" color="secondary" onClick={handleClose}>
             No
           </Button>
-          <Button type="button" variant="contained" color="primary" onClick={fillFormWithUserData}>
+          <Button variant="contained" color="primary" onClick={() => fillFormWithUserData()}>
             Sí
           </Button>
         </div>
       </BasicModal>
 
-      <LoanForm
-        control={control}
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={onReset}
-        hideLabels={hideLabels}
-      />
+      <BasicModal title="Confirmar Préstamo" open={isConfirmOpen} onClose={() => setIsConfirmOpen(false)}>
+        {loanPreview && (
+          <div>
+            <p><strong>Nombre:</strong> {loanPreview.firstName}</p>
+            <p><strong>Correo:</strong> {loanPreview.email}</p>
+            <p><strong>Dirección:</strong> {loanPreview.address}</p>
+            <p><strong>Monto:</strong> {loanPreview.loanAmount}</p>
+          </div>
+        )}
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+          <Button variant="outlined" onClick={() => setIsConfirmOpen(false)}>
+            Cancelar
+          </Button>
+          <Button variant="contained" color="primary" onClick={onSubmit}>
+            Confirmar
+          </Button>
+        </div>
+      </BasicModal>
 
-      <Alert
-        type={alert.type}
-        title={alert.title}
-        message={alert.message}
-        open={alert.open}
-        onClose={handleCloseAlert}
-      />
+      <BasicModal title="¿Qué desea hacer ahora?" open={isPostLoanOpen} onClose={() => setIsPostLoanOpen(false)}>
+        <p>¿Desea realizar otro préstamo o regresar al inicio?</p>
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+          <Button variant="outlined" color="secondary" onClick={() => setIsPostLoanOpen(false)}>
+            Otro Préstamo
+          </Button>
+          <Button variant="contained" color="primary" onClick={redirectToHome}>
+            Ir a Home
+          </Button>
+        </div>
+      </BasicModal>
+
+      <LoanForm control={control} onSubmit={handlePreSubmit} onReset={reset} hideLabels={hideLabels} />
+      <Alert {...alert} onClose={handleCloseAlert} />
     </>
   );
 };

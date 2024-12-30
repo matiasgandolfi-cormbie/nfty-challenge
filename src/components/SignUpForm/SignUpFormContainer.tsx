@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+
 import SignUpForm from './SignUpForm';
 import Alert from '../Alert';
 import { User } from '../../../types/user';
@@ -26,6 +29,8 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     open: false,
   });
 
+  const router = useRouter();
+
   const handleCloseAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
   };
@@ -38,7 +43,7 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     resolver: yupResolver(registerValidation),
     mode: 'onBlur',
     defaultValues: {
-      email: 'ejemplo@ejemplo.com', // Valor predeterminado para el email
+      email: 'ejemplo@ejemplo.com',
     },
   });
 
@@ -53,8 +58,8 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
         address: data.address,
         birthDate: new Date(data.birthDate),
         phoneNumber: data.phoneNumber,
-        password: '',
-        role: '',
+        password: data.password,
+        role: 'user',
       };
 
       await registerUser(finalData);
@@ -62,14 +67,32 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
       setAlert({
         type: 'success',
         title: 'Registro exitoso',
-        message: '¡Usuario registrado correctamente!',
+        message: '¡Usuario registrado correctamente! Iniciando sesión...',
         open: true,
       });
+
+      // Iniciar sesión automáticamente
+      const loginResult = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
+      if (loginResult?.error) {
+        setAlert({
+          type: 'error',
+          title: 'Error al iniciar sesión',
+          message: loginResult.error,
+          open: true,
+        });
+      } else {
+        router.push('/loan');
+      }
     } catch (error: any) {
       setAlert({
         type: 'error',
         title: 'Error en el registro',
-        message: `Error: ${error.message}`,
+        message: `Error: ${error.message || 'Error desconocido'}`,
         open: true,
       });
     }

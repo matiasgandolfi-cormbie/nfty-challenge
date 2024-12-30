@@ -17,7 +17,7 @@ const Page = async () => {
   if (session?.user?.email) {
       user = await getUserByEmail(session.user.email);
   } else {
-    redirect('/auth/login');
+    redirect('/auth/signIn');
   }
 
   return (
