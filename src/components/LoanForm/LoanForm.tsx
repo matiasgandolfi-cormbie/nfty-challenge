@@ -17,7 +17,7 @@ const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLab
   return (
     <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
       <Typography variant="h4" gutterBottom>
-        Registro de Préstamo
+        Solicitud de Préstamo
       </Typography>
 
       <form onSubmit={onSubmit} autoComplete="off">
