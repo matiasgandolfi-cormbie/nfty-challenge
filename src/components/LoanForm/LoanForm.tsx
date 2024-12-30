@@ -20,7 +20,7 @@ const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLab
         Registro de Préstamo
       </Typography>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} autoComplete="off">
         <Input
           control={control}
           name="firstName"

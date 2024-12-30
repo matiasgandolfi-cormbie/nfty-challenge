@@ -4,6 +4,7 @@ import React from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { Input } from '../Input';
 import { SignUpData } from './types';
+import { Button } from '@mui/material';
 
 interface SignUpFormProps {
   control: Control<SignUpData>;
@@ -19,6 +20,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   return (
     <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-center">Registro</h2>
+      
       <form onSubmit={onSubmit} className="space-y-2">
         <Input
           control={control}
@@ -79,12 +81,21 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           label="Teléfono"
         />
 
-        <button
+        <Button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{
+            padding: '10px',
+            fontSize: '1rem',
+            borderRadius: '8px',
+            textTransform: 'none',
+            marginTop: '1rem',
+          }}
         >
           Registrar
-        </button>
+        </Button>
       </form>
     </div>
   );

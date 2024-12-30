@@ -74,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                   padding: '8px 12px',
                   minWidth: '120px',
                 }}
-                onClick={() => redirect('/auth/signIn')}
+                onClick={() => router.push('/auth/signIn')}
               >
                 Iniciar Sesión
               </Button>
@@ -87,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                   padding: '8px 12px',
                   minWidth: '120px',
                 }}
-                onClick={() => redirect('/auth/signUp')}
+                onClick={() => router.push('/auth/signUp')}
               >
                 Registrarse
               </Button>
@@ -96,7 +96,6 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
         </div>
       )}
 
-      {/* Drawer para dispositivos móviles */}
       {!isLoading && (
         <Drawer anchor="right" open={isOpen} onClose={toggleDrawer}>
           <Box
@@ -133,7 +132,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                 type="button"
                 variant="contained"
                 color="error"
-                onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                onClick={() => signOut({ callbackUrl: '/auth/signIn' })}
               >
                 Cerrar Sesión
               </Button>
@@ -144,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                   type="button"
                   variant="contained"
                   color="primary"
-                  onClick={() => router.push('/auth/login')}
+                  onClick={() => router.push('/auth/signIn')}
                 >
                   Iniciar Sesión
                 </Button>

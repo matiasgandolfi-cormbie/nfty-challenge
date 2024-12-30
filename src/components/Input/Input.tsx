@@ -31,6 +31,7 @@ const Input: React.FC<InputProps> = ({
         variant="outlined"
         fullWidth
         margin="none"
+        autoComplete="off"
         value={value}
         onChange={(e) =>
           onChange(type === 'number' ? +e.target.value : e.target.value)

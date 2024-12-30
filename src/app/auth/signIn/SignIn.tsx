@@ -18,6 +18,7 @@ const SignIn: React.FC<SignInProps> = ({ control, errors, onSubmit }) => {
         control={control}
         name="email"
         title="Correo Electrónico"
+        label="Correo Electrónico"
         type="email"
         rules={{ required: 'El correo electrónico es obligatorio' }}
       />
@@ -26,6 +27,7 @@ const SignIn: React.FC<SignInProps> = ({ control, errors, onSubmit }) => {
         control={control}
         name="password"
         title="Contraseña"
+        label="Contraseña"
         type="password"
         rules={{ required: 'La contraseña es obligatoria' }}
       />

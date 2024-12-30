@@ -14,6 +14,9 @@ const Page = () => {
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onBlur',
+    defaultValues: {
+      email: 'ejemplo@ejemplo.com',
+    },
   });
 
   const [error, setError] = useState('');
@@ -34,7 +37,7 @@ const Page = () => {
       if (result?.error) {
         setError(result.error || 'Error desconocido');
       } else {
-        router.push('/');
+        router.push('/loan');
       }
     } catch (err) {
       setError('Error inesperado al iniciar sesión');

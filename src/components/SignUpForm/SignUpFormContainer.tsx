@@ -3,18 +3,23 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { registerValidation } from '@/app/validations/registerValidations';
 import SignUpForm from './SignUpForm';
 import Alert from '../Alert';
 import { User } from '../../../types/user';
 import { SignUpData } from './types';
+import { registerValidation } from '@/app/validations/registerValidations';
 
 interface SignUpFormContainerProps {
   registerUser: (data: User) => Promise<unknown>;
 }
 
 const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser }) => {
-  const [alert, setAlert] = useState<{ type: 'success' | 'error' | 'info'; title?: string; message: string; open: boolean }>({
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error' | 'info';
+    title?: string;
+    message: string;
+    open: boolean;
+  }>({
     type: 'info',
     title: '',
     message: '',
@@ -32,6 +37,9 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
   } = useForm<SignUpData>({
     resolver: yupResolver(registerValidation),
     mode: 'onBlur',
+    defaultValues: {
+      email: 'ejemplo@ejemplo.com', // Valor predeterminado para el email
+    },
   });
 
   const onSubmit = async (data: SignUpData) => {
@@ -45,11 +53,11 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
         address: data.address,
         birthDate: new Date(data.birthDate),
         phoneNumber: data.phoneNumber,
-        password: "",
-        role: ""
+        password: '',
+        role: '',
       };
 
-      const result = await registerUser(finalData);
+      await registerUser(finalData);
 
       setAlert({
         type: 'success',
@@ -69,11 +77,7 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
 
   return (
     <>
-      <SignUpForm
-        control={control}
-        errors={errors}
-        onSubmit={handleSubmit(onSubmit)}
-      />
+      <SignUpForm control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} />
 
       <Alert
         type={alert.type}
