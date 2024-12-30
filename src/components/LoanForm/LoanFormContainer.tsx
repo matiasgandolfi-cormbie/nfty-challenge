@@ -121,6 +121,7 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan })
         });
 
         reset();
+        setHideLabels(false);
         setLoanPreview(null);
         localStorage.removeItem('loanForm');
 
@@ -163,7 +164,7 @@ const LoanFormContainer: React.FC<LoanFormContainerProps> = ({ user, postLoan })
             <p><strong>Nombre:</strong> {loanPreview.firstName}</p>
             <p><strong>Correo:</strong> {loanPreview.email}</p>
             <p><strong>Dirección:</strong> {loanPreview.address}</p>
-            <p><strong>Monto:</strong> {loanPreview.loanAmount}</p>
+            <p><strong>Monto:</strong> ${loanPreview.loanAmount}</p>
           </div>
         )}
         <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
