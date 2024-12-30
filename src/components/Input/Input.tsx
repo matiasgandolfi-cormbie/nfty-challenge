@@ -6,6 +6,7 @@ import { InputProps } from './types';
 const Input: React.FC<InputProps> = ({
   name,
   label,
+  title,
   type = 'text',
   value,
   error,
@@ -15,31 +16,30 @@ const Input: React.FC<InputProps> = ({
   const maxDate = new Date().toISOString().split('T')[0];
 
   return (
+    <>
+    <label>{title} :</label>
     <TextField
       id={name}
       label={label}
       type={type}
       variant="outlined"
       fullWidth
-      margin="normal"
+      margin="none"
       value={value}
-      onChange={(e) => onChange(type === 'number' ? +e.target.value : e.target.value)}
+      onChange={(e) =>
+        onChange(type === 'number' ? +e.target.value : e.target.value)
+      }
       onBlur={onBlur}
       error={!!error}
       helperText={error}
       {...(type === 'date' && {
-        InputProps: {
-          inputProps: {
-            max: maxDate,
-          },
-        },
+        inputProps: { max: maxDate },
       })}
-      {...(type === 'date' && {
-        InputLabelProps: {
-          shrink: true,
-        },
+      {...(type === 'number' && {
+        inputMode: 'numeric',
       })}
     />
+    </>
   );
 };
 

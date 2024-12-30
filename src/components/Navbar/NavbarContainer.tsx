@@ -16,11 +16,7 @@ const NavbarContainer = () => {
     }
   }, [session, status]);
 
-  if (status === 'loading') {
-    return <p>Cargando sesión...</p>;
-  }
-
-  return <Navbar session={userSession} />;
+  return <Navbar session={userSession} isLoading={status === 'loading'} />;
 };
 
 export default NavbarContainer;

@@ -15,11 +15,7 @@ const Page = async () => {
   let user: User | null = null;
 
   if (session?.user?.email) {
-    try {
       user = await getUserByEmail(session.user.email);
-    } catch (error) {
-      console.error('❌ Error al obtener el usuario:', error);
-    }
   } else {
     redirect('/auth/login');
   }

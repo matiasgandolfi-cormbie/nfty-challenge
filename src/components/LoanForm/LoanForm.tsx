@@ -21,13 +21,57 @@ const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLab
       </Typography>
 
       <form onSubmit={onSubmit}>
-        <Input control={control} name="firstName" label={hideLabels ? '' : 'Nombre'} />
-        <Input control={control} name="lastName" label={hideLabels ? '' : 'Apellido'} />
-        <Input control={control} name="email" label={hideLabels ? '' : 'Correo Electrónico'} type="email" />
-        <Input control={control} name="address" label={hideLabels ? '' : 'Dirección'} />
-        <Input control={control} name="loanAmount" label="Monto del Préstamo" type="number" />
-        <Input control={control} name="birthDate" label={hideLabels ? '' : 'Fecha de Nacimiento'} type="date" />
-        <Input control={control} name="phoneNumber" label={hideLabels ? '' : 'Número de Teléfono'} type="tel" />
+        <Input
+          control={control}
+          name="firstName"
+          title="Nombre"
+          label={hideLabels ? '' : 'Nombre'}
+        />
+
+        <Input
+          control={control}
+          name="lastName"
+          title="Apellido"
+          label={hideLabels ? '' : 'Apellido'}
+        />
+
+        <Input
+          control={control}
+          name="email"
+          title="Correo Electrónico"
+          label={hideLabels ? '' : 'Correo Electrónico'}
+          type="email"
+        />
+
+        <Input
+          control={control}
+          name="address"
+          title="Dirección"
+          label={hideLabels ? '' : 'Dirección'}
+        />
+
+        <Input
+          control={control}
+          name="loanAmount"
+          title="Monto del Préstamo"
+          label="Monto del Préstamo"
+          type="number"
+        />
+
+        <Input
+          control={control}
+          name="birthDate"
+          title="Fecha de Nacimiento"
+          type="date"
+        />
+
+        <Input
+          control={control}
+          name="phoneNumber"
+          title="Número de Teléfono"
+          label={hideLabels ? '' : 'Número de Teléfono'}
+          type="tel"
+        />
 
         <Box mt={3}>
           <Button type="submit" variant="contained" color="primary" fullWidth>

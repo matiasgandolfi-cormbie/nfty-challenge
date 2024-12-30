@@ -1,5 +1,5 @@
 'use server'
-import { RegisterForm } from '@/components/RegisterForm'
+import { RegisterForm } from '@/components/SignUpForm'
 import React from 'react'
 import { registerUser } from '../../utils/registerUser'
 

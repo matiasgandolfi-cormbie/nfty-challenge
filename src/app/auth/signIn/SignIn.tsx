@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Button } from '@mui/material';
+import { Input } from '@/components/Input';
 
 interface SignInProps {
   control: any;
@@ -10,47 +11,43 @@ interface SignInProps {
   error: string;
 }
 
-const SignIn: React.FC<SignInProps> = ({ control, errors, onSubmit, error }) => {
+const SignIn: React.FC<SignInProps> = ({ control, errors, onSubmit }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label>Email:</label>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <input
-              type="email"
-              {...field}
-              className="border p-2 rounded-md w-full"
-            />
-          )}
-        />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-      </div>
+    <form onSubmit={onSubmit} className="space-y-4 max-w-md mx-auto p-4 border rounded-md shadow-md">
+      <Input
+        control={control}
+        name="email"
+        title="Correo Electrónico"
+        label="Correo Electrónico"
+        type="email"
+        rules={{ required: 'El correo electrónico es obligatorio' }}
+      />
 
-      <div>
-        <label>Contraseña:</label>
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <input
-              type="password"
-              {...field}
-              className="border p-2 rounded-md w-full"
-            />
-          )}
-        />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-      </div>
+      <Input
+        control={control}
+        name="password"
+        title="Contraseña"
+        label="Contraseña"
+        type="password"
+        rules={{ required: 'La contraseña es obligatoria' }}
+      />
 
-      <button
-        type="submit"
-        className="mt-4 bg-blue-500 text-white p-2 rounded-md w-full"
-      >
-        Iniciar sesión
-      </button>
+      <div className="flex justify-center mt-4">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{
+            width: '100%',
+            padding: '10px',
+            fontSize: '1rem',
+            borderRadius: '8px',
+            textTransform: 'none',
+          }}
+        >
+          Iniciar sesión
+        </Button>
+      </div>
     </form>
   );
 };

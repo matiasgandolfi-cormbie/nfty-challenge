@@ -4,25 +4,25 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerValidation } from '@/app/validations/registerValidations';
-import RegisterForm from './RegisterForm';
-import { FormRegisterData } from './types';
+import RegisterForm from './SignUpForm';
 import { User } from '../../../types/user';
+import { SignUpRegisterData } from './types';
 
-interface RegisterFormContainerProps {
+interface SignUpFormContainerProps {
   registerUser: (data: User) => Promise<unknown>;
 }
 
-const RegisterFormContainer: React.FC<RegisterFormContainerProps> = ({ registerUser }) => {
+const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormRegisterData>({
+  } = useForm<SignUpRegisterData>({
     resolver: yupResolver(registerValidation),
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data: FormRegisterData) => {
+  const onSubmit = async (data: SignUpRegisterData) => {
     try {
       const finalData: User = {
         createdAt: new Date(),
@@ -56,4 +56,4 @@ const RegisterFormContainer: React.FC<RegisterFormContainerProps> = ({ registerU
   );
 };
 
-export default RegisterFormContainer;
+export default SignUpFormContainer;

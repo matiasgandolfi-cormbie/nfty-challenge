@@ -1,24 +1,32 @@
 'use client';
 import React from 'react';
 import Input from './Input';
-import { InputProps } from './types';
+import { InputContainerProps } from './types';
 import { Controller } from 'react-hook-form';
 
-const InputContainer: React.FC<InputProps> = ({ control, name, label, type = 'text', rules }) => {
+const InputContainer: React.FC<InputContainerProps> = ({
+  control,
+  name,
+  title,
+  label,
+  type = 'text',
+  rules,
+}) => {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
         <Input
-          name={field.name}
+          name={name}
+          title={title}
           label={label}
           type={type}
-          value={field.value}
+          value={value || ''}
           error={error?.message}
-          onChange={field.onChange}
-          onBlur={field.onBlur}
+          onChange={onChange}
+          onBlur={onBlur}
         />
       )}
     />
