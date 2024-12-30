@@ -1,28 +1,40 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerValidation } from '@/app/validations/registerValidations';
-import RegisterForm from './SignUpForm';
+import SignUpForm from './SignUpForm';
+import Alert from '../Alert';
 import { User } from '../../../types/user';
-import { SignUpRegisterData } from './types';
+import { SignUpData } from './types';
 
 interface SignUpFormContainerProps {
   registerUser: (data: User) => Promise<unknown>;
 }
 
 const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser }) => {
+  const [alert, setAlert] = useState<{ type: 'success' | 'error' | 'info'; title?: string; message: string; open: boolean }>({
+    type: 'info',
+    title: '',
+    message: '',
+    open: false,
+  });
+
+  const handleCloseAlert = () => {
+    setAlert((prev) => ({ ...prev, open: false }));
+  };
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpRegisterData>({
+  } = useForm<SignUpData>({
     resolver: yupResolver(registerValidation),
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data: SignUpRegisterData) => {
+  const onSubmit = async (data: SignUpData) => {
     try {
       const finalData: User = {
         createdAt: new Date(),
@@ -39,20 +51,38 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
 
       const result = await registerUser(finalData);
 
-      console.log('Usuario registrado correctamente:', result);
-      alert('¡Usuario registrado correctamente!');
+      setAlert({
+        type: 'success',
+        title: 'Registro exitoso',
+        message: '¡Usuario registrado correctamente!',
+        open: true,
+      });
     } catch (error: any) {
-      console.error('Error en el registro:', error.message);
-      alert(`Error: ${error.message}`);
+      setAlert({
+        type: 'error',
+        title: 'Error en el registro',
+        message: `Error: ${error.message}`,
+        open: true,
+      });
     }
   };
 
   return (
-    <RegisterForm
-      control={control}
-      errors={errors}
-      onSubmit={handleSubmit(onSubmit)}
-    />
+    <>
+      <SignUpForm
+        control={control}
+        errors={errors}
+        onSubmit={handleSubmit(onSubmit)}
+      />
+
+      <Alert
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        open={alert.open}
+        onClose={handleCloseAlert}
+      />
+    </>
   );
 };
 

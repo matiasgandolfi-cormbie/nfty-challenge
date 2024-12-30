@@ -17,28 +17,34 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <>
-    <label>{title} :</label>
-    <TextField
-      id={name}
-      label={label}
-      type={type}
-      variant="outlined"
-      fullWidth
-      margin="none"
-      value={value}
-      onChange={(e) =>
-        onChange(type === 'number' ? +e.target.value : e.target.value)
-      }
-      onBlur={onBlur}
-      error={!!error}
-      helperText={error}
-      {...(type === 'date' && {
-        inputProps: { max: maxDate },
-      })}
-      {...(type === 'number' && {
-        inputMode: 'numeric',
-      })}
-    />
+      {title && (
+        <label className="block mb-1 text-sm font-medium text-gray-700">
+          {title} :
+        </label>
+      )}
+
+      <TextField
+        id={name}
+        label={!value ? label : ''} 
+        placeholder={label}
+        type={type}
+        variant="outlined"
+        fullWidth
+        margin="none"
+        value={value}
+        onChange={(e) =>
+          onChange(type === 'number' ? +e.target.value : e.target.value)
+        }
+        onBlur={onBlur}
+        error={!!error}
+        helperText={error}
+        {...(type === 'date' && {
+          inputProps: { max: maxDate },
+        })}
+        {...(type === 'number' && {
+          inputMode: 'numeric',
+        })}
+      />
     </>
   );
 };

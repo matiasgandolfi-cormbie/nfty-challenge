@@ -7,10 +7,10 @@ import { Control } from 'react-hook-form';
 import { LoanFormData } from './types';
 
 interface LoanFormProps {
-  control: Control<LoanFormData>; // Control del formulario
-  onSubmit: () => void; // Función para enviar el formulario
-  onReset: () => void; // Función para restablecer el formulario
-  hideLabels?: boolean; // Prop opcional para ocultar etiquetas
+  control: Control<LoanFormData>;
+  onSubmit: () => void;
+  onReset: () => void; 
+  hideLabels?: boolean;
 }
 
 const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLabels }) => {

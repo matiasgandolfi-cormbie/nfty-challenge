@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                   padding: '8px 12px',
                   minWidth: '120px',
                 }}
-                onClick={() => router.push('/register')}
+                onClick={() => router.push('/loan')}
               >
                 Solicitar un nuevo prestamo
               </Button>
@@ -116,6 +116,19 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
             </div>
 
             {session ? (
+              <>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                sx={{
+                  padding: '8px 12px',
+                  minWidth: '120px',
+                }}
+                onClick={() => router.push('/loan')}
+              >
+                Solicitar un nuevo prestamo
+              </Button>
               <Button
                 type="button"
                 variant="contained"
@@ -124,6 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
               >
                 Cerrar Sesión
               </Button>
+              </>
             ) : (
               <>
                 <Button
@@ -138,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
                   type="button"
                   variant="outlined"
                   color="secondary"
-                  onClick={() => router.push('/auth/register')}
+                  onClick={() => router.push('/auth/signUp')}
                 >
                   Registrarse
                 </Button>

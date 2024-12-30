@@ -1,8 +1,8 @@
 export interface InputProps {
   name: string;
-  title?: string; // Nuevo título opcional
+  title?: string;
   label?: string;
-  type?: 'text' | 'number' | 'date' | 'email' | 'password' | 'tel'; // Añadido 'tel'
+  type?: 'text' | 'number' | 'date' | 'email' | 'password' | 'tel';
   value: string | number;
   error?: string;
   onChange: (value: string | number) => void;
@@ -12,8 +12,8 @@ export interface InputProps {
 export interface InputContainerProps {
   control: any;
   name: string;
-  title?: string; // Nuevo título opcional
+  title?: string;
   label?: string;
-  type?: 'text' | 'number' | 'date' | 'email' | 'password' | 'tel'; // Añadido 'tel'
+  type?: 'text' | 'number' | 'date' | 'email' | 'password' | 'tel';
   rules?: any;
 }

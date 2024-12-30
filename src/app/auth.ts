@@ -16,8 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token
     },
-    // session() se utiliza para agregar la informacion del token a la session del usuario
-    // Permite que la informacion del token este disponible en el cliente
     session({ session, token }) {
       if(session.user) {
         session.user.role = token.role;

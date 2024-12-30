@@ -1,11 +1,11 @@
 'use server'
-import { RegisterForm } from '@/components/SignUpForm'
+import { SignUpForm } from '@/components/SignUpForm'
 import React from 'react'
 import { registerUser } from '../../utils/registerUser'
 
 function Page() {
   return (
-    <RegisterForm registerUser={registerUser} />
+    <SignUpForm registerUser={registerUser} />
 )
 }
 

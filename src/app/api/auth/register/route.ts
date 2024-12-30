@@ -13,8 +13,6 @@ export async function POST(request: Request) {
     });
 
     if (existingUser) {
-      console.log("El usuario ya existe");
-
       return NextResponse.json(
         {
           message: "El email ya existe",
@@ -38,9 +36,6 @@ export async function POST(request: Request) {
         createdAt: new Date(),
       },
     });
-
-    console.log("Usuario creado:", newUser);
-
     const { password: _, ...userWithoutPassword } = newUser;
     return NextResponse.json(userWithoutPassword);
   } catch (error) {

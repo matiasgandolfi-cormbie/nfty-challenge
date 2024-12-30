@@ -6,5 +6,5 @@ export type Loan = {
     loanAmount  : number;
     address : string;
     user? : UserDto;
-    createdAt : Date;
+    createdAt? : Date;
 }

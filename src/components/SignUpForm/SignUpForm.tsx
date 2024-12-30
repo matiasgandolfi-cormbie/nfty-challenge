@@ -3,11 +3,11 @@
 import React from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { Input } from '../Input';
-import { SignUpRegisterData } from './types';
+import { SignUpData } from './types';
 
 interface SignUpFormProps {
-  control: Control<SignUpRegisterData>;
-  errors: FieldErrors<SignUpRegisterData>;
+  control: Control<SignUpData>;
+  errors: FieldErrors<SignUpData>;
   onSubmit: () => void;
 }
 

@@ -1,41 +1,54 @@
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Loan } from '../../../../types/loan';
-import { Box, Grid, Typography, Paper, Divider } from '@mui/material';
+import { Box, Typography, Paper, Divider, Button } from '@mui/material';
 
 interface HomeAuthProperties {
-  loans: Loan[]; // Asegúrate de que sea Loan[]
+  loans: Loan[];
 }
 
 const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
+  const router = useRouter();
+
   return (
     <Box sx={{ padding: 4 }}>
-      <Typography variant="h2" gutterBottom>
+      {/* Título principal */}
+      <Typography variant="h2" gutterBottom textAlign="center">
         Detalles de los Préstamos
       </Typography>
-      <Grid container spacing={2}>
+
+      {/* Contenedor principal */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '300px',
+        }}
+      >
         {loans.length > 0 ? (
           loans.map((loan) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={loan.id}>
+            <Box
+              key={loan.id}
+              sx={{
+                flex: '1 1 calc(25% - 16px)', // 4 columnas con espacio entre ellas
+                minWidth: '280px',
+                maxWidth: '400px',
+              }}
+            >
               <Paper
                 elevation={3}
                 sx={{
                   padding: 2,
                   borderRadius: 2,
                   backgroundColor: '#fff',
+                  height: '100%',
                 }}
               >
-
-{/* export type LoanFormData = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    address: string;
-    loanAmount: number;
-    birthDate: Date;
-    phoneNumber: string;
-  } */}
-                {/* Sección de Usuario */}
+                {/* Información del Usuario */}
                 <Typography variant="h4" sx={{ marginBottom: 1 }}>
                   Usuario
                 </Typography>
@@ -46,27 +59,27 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
                   <strong>Email:</strong> {loan.user?.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Direccion:</strong> {loan.address}
+                  <strong>Dirección:</strong> {loan.address}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Fecha de Nacimiento: </strong>
-                  {loan.user?.birthDate.toLocaleDateString()}
+                  <strong>Fecha de Nacimiento:</strong>{' '}
+                  {loan.user?.birthDate?.toLocaleDateString()}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Telefono: </strong> {loan.user?.phoneNumber}
+                  <strong>Teléfono:</strong> {loan.user?.phoneNumber}
                 </Typography>
-                
-                {/* Línea Divisoria */}
+
                 <Divider sx={{ marginY: 2 }} />
-                
-                {/* Sección de Préstamo */}
+
                 <Typography variant="h3" gutterBottom>
                   Préstamo #{loan.id}
                 </Typography>
-                <Typography variant="body1">
-                  <strong>Fecha de creación:</strong>{' '}
-                  {new Date(loan.createdAt).toLocaleDateString()}
-                </Typography>
+                {loan.createdAt && (
+                  <Typography variant="body1">
+                    <strong>Solicitado el día:</strong>{' '}
+                    {new Date(loan.createdAt).toLocaleDateString()}
+                  </Typography>
+                )}
                 <Typography
                   variant="body2"
                   sx={{
@@ -77,14 +90,40 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
                   Monto: ${loan.loanAmount}
                 </Typography>
               </Paper>
-            </Grid>
+            </Box>
           ))
         ) : (
-          <Grid item xs={12}>
-            <Typography variant="body1">No hay préstamos disponibles</Typography>
-          </Grid>
+          <Box
+            sx={{
+              textAlign: 'center',
+              marginTop: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+            }}
+          >
+            <Typography variant="h5" gutterBottom>
+              Aún no tienes tu primer préstamo
+            </Typography>
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              sx={{
+                padding: '8px 12px',
+                minWidth: '200px',
+                fontSize: '1rem',
+                borderRadius: '8px',
+                textTransform: 'none',
+              }}
+              onClick={() => router.push('/loan')}
+            >
+              Solicitar un nuevo préstamo
+            </Button>
+          </Box>
         )}
-      </Grid>
+      </Box>
     </Box>
   );
 };

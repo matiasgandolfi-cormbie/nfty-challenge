@@ -12,7 +12,7 @@ async function main() {
       birthDate: new Date('1990-01-01'),
       phoneNumber: '1234567890',
       password: 'securepassword',
-      role: 'admin', // ✅ Asignar un rol específico
+      role: 'admin',
     },
   });
 }

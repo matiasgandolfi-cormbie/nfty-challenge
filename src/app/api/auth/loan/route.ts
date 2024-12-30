@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('❌ Error en /api/loan:', error);
+    console.error('Error en /api/loan:', error);
     return NextResponse.json(
       { success: false, message: 'Error inesperado al registrar el préstamo.' },
       { status: 500 }
