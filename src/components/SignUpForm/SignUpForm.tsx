@@ -4,7 +4,7 @@ import React from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { Input } from '../Input';
 import { SignUpData } from './types';
-import { Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 interface SignUpFormProps {
   control: Control<SignUpData>;
@@ -18,9 +18,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   onSubmit,
 }) => {
   return (
+
     <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">Registro</h2>
-      
+    <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
+    <Typography variant="h1" gutterBottom>
+      Registrate
+    </Typography>      
       <form onSubmit={onSubmit} className="space-y-2">
         <Input
           control={control}
@@ -97,6 +100,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           Registrar
         </Button>
       </form>
+    </Box>
     </div>
   );
 };

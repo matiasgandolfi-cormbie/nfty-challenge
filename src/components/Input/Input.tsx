@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React from 'react';
 import { TextField } from '@mui/material';
 import { InputProps } from './types';
@@ -14,18 +14,19 @@ const Input: React.FC<InputProps> = ({
   onBlur,
 }) => {
   const maxDate = new Date().toISOString().split('T')[0];
-
   return (
     <>
       {title && (
-        <label className="block mb-1 text-sm font-medium text-gray-700">
+        <label
+          htmlFor={name}
+          className="block mb-1 text-sm font-medium text-gray-700"
+        >
           {title} :
         </label>
       )}
 
       <TextField
         id={name}
-        label={!value ? label : ''} 
         placeholder={label}
         type={type}
         variant="outlined"
@@ -39,6 +40,9 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlur}
         error={!!error}
         helperText={error}
+        aria-label={title || label}
+        aria-describedby={error ? `${name}-error` : undefined}
+        role="textbox"
         {...(type === 'date' && {
           inputProps: { max: maxDate },
         })}

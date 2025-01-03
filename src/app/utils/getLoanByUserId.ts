@@ -12,7 +12,8 @@ export const getLoanByUserId = async (userId: string): Promise<Loan[]> => {
     }
 
     const loans = await prisma.loan.findMany({
-      where: { userId: userIdNumber },
+      // where: { userId: userIdNumber },
+      where: { userId: 88 },
       include: {
         user: {
           select: {

@@ -16,7 +16,7 @@ interface LoanFormProps {
 const LoanForm: React.FC<LoanFormProps> = ({ control, onSubmit, onReset, hideLabels }) => {
   return (
     <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         Solicitud de Préstamo
       </Typography>
 

@@ -27,7 +27,11 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
       </div>
 
       <div className="md:hidden">
-        <IconButton onClick={toggleDrawer}>
+      <IconButton
+          aria-label="Abrir menú de navegación"
+          title="Abrir menú de navegación"
+          onClick={toggleDrawer}
+        >
           <MenuIcon />
         </IconButton>
       </div>
@@ -109,7 +113,11 @@ const Navbar: React.FC<NavbarProps> = ({ session, isLoading = false }) => {
           >
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Menú</h2>
-              <IconButton onClick={toggleDrawer}>
+              <IconButton
+                aria-label="Cerrar menú de navegación"
+                title="Cerrar menú de navegación"
+                onClick={toggleDrawer}
+              >
                 <CloseIcon />
               </IconButton>
             </div>

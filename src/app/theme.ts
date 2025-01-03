@@ -6,11 +6,13 @@ const theme = createTheme({
     h1: {
       fontFamily: `'Montserrat', sans-serif`,
       fontWeight: 600,
+      fontSize: 50,
       color: '#6767aa',
     },
     h2: {
       fontFamily: `'Montserrat', sans-serif`,
       fontWeight: 600,
+      fontSize: 30,
       color: '#6767aa',
     },
     h3: {

@@ -13,12 +13,10 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
 
   return (
     <Box sx={{ padding: 4 }}>
-      {/* Título principal */}
-      <Typography variant="h2" gutterBottom textAlign="center">
+      <Typography variant="h1" gutterBottom textAlign="center">
         Detalles de los Préstamos
       </Typography>
 
-      {/* Contenedor principal */}
       <Box
         sx={{
           display: 'flex',
@@ -34,7 +32,7 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
             <Box
               key={loan.id}
               sx={{
-                flex: '1 1 calc(25% - 16px)', // 4 columnas con espacio entre ellas
+                flex: '1 1 calc(25% - 16px)',
                 minWidth: '280px',
                 maxWidth: '400px',
               }}
@@ -48,8 +46,7 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
                   height: '100%',
                 }}
               >
-                {/* Información del Usuario */}
-                <Typography variant="h4" sx={{ marginBottom: 1 }}>
+                <Typography variant="h2" sx={{ marginBottom: 1 }}>
                   Usuario
                 </Typography>
                 <Typography variant="body1">
@@ -103,13 +100,13 @@ const HomeAuth: React.FC<HomeAuthProperties> = ({ loans }) => {
               gap: 2,
             }}
           >
-            <Typography variant="h5" gutterBottom>
-              Aún no tienes tu primer préstamo
-            </Typography>
+            <h2>Aún no tienes tu primer préstamo</h2>
             <Button
               type="button"
               variant="contained"
               color="primary"
+              aria-label="Solicitar un nuevo préstamo"
+              title="Solicitar un nuevo préstamo"
               sx={{
                 padding: '8px 12px',
                 minWidth: '200px',
