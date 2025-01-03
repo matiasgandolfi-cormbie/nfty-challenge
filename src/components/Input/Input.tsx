@@ -16,7 +16,6 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const maxDate = new Date().toISOString().split('T')[0];
 
-  // Corregir el formato para campos de tipo fecha
   const formattedValue =
     type === 'date' && typeof value === 'string'
       ? value.split('T')[0]

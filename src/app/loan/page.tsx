@@ -6,7 +6,7 @@ import authConfig from '../auth.config';
 import { getUserByEmail } from '../utils/getUserByEmail';
 import { redirect } from 'next/navigation';
 import { User } from '../../../types/user';
-import LoanFormContainer from '@/components/LoanForm/LoanFormContainer';
+import LoanFormContainer from '@/app/loan/LoanForm/LoanFormContainer';
 import { postLoan } from '../utils/postLoan';
 
 const Page = async () => {

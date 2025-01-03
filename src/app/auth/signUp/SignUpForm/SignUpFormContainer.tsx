@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 import SignUpForm from './SignUpForm';
-import Alert from '../Alert';
-import BasicModal from '../Modal/BasicModal';
-import { User } from '../../../types/user';
+import Alert from '../../../../components/Alert';
+import BasicModal from '../../../../components/Modal/BasicModal';
+import { User } from '../../../../../types/user';
 import { SignUpData } from './types';
 import { registerValidation } from '@/app/validations/registerValidations';
 import { Button } from '@mui/material';

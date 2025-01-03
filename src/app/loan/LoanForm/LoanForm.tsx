@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Input } from '../Input';
+import { Input } from '../../../components/Input';
 import { Box, Button, Typography } from '@mui/material';
 import { Control } from 'react-hook-form';
 import { LoanFormData } from './types';

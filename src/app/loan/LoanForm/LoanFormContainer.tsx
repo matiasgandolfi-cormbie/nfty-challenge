@@ -5,12 +5,12 @@ import LoanForm from './LoanForm';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoanFormData } from './types';
-import { User } from '../../../types/user';
+import { User } from '../../../../types/user';
 import { loanValidation } from '@/app/validations/loanValidation';
-import BasicModal from '../Modal/BasicModal';
-import Alert from '../Alert';
+import BasicModal from '../../../components/Modal/BasicModal';
+import Alert from '../../../components/Alert';
 import { Button } from '@mui/material';
-import { Loan } from '../../../types/loan';
+import { Loan } from '../../../../types/loan';
 import { useRouter } from 'next/navigation';
 
 interface LoanFormContainerProps {

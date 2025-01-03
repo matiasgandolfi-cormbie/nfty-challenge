@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
-import { Input } from '../Input';
+import { Input } from '../../../../components/Input';
 import { SignUpData } from './types';
 import { Box, Button, Typography } from '@mui/material';
 
