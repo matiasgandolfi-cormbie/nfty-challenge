@@ -151,7 +151,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
 
   return (
     <>
-      {/* 📄 Formulario de Registro */}
       <SignUpForm control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} />
 
       {/* 🚨 Alerta */}
