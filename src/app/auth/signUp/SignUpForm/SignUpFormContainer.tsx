@@ -19,7 +19,6 @@ interface SignUpFormContainerProps {
 }
 
 const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser }) => {
-  // Estado para manejar alertas
   const [alert, setAlert] = useState<{
     type: 'success' | 'error' | 'info';
     title?: string;
@@ -32,23 +31,19 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     open: false,
   });
 
-  // Estado para mostrar el modal de redirección
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
   const [pendingLoginData, setPendingLoginData] = useState<SignUpData | null>(null);
 
   const router = useRouter();
 
-  /** 🔒 Cerrar alertas */
   const handleCloseAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
   };
 
-  /** 🔒 Cerrar modal de redirección */
   const handleCloseRedirectModal = () => {
     setIsRedirectModalOpen(false);
   };
 
-  /** ✅ Confirmar redirección e iniciar sesión */
   const handleConfirmRedirect = async () => {
     if (pendingLoginData) {
       try {
@@ -79,7 +74,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     }
   };
 
-  // Configuración del formulario con React Hook Form
   const {
     control,
     handleSubmit,
@@ -94,7 +88,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     },
   });
 
-  /** 📥 Cargar datos desde localStorage al iniciar */
   useEffect(() => {
     const savedData = localStorage.getItem('signUpForm');
     if (savedData) {
@@ -105,7 +98,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     }
   }, [setValue]);
 
-  /** 💾 Guardar datos en localStorage cuando cambie el formulario */
   useEffect(() => {
     const saveFormData = () => {
       const formData = getValues();
@@ -119,7 +111,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     };
   }, [getValues]);
 
-  /** 📤 Enviar formulario */
   const onSubmit = async (data: SignUpData) => {
     try {
       const finalData: User = {
@@ -146,7 +137,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
 
       localStorage.removeItem('signUpForm');
 
-      // Guardar datos para el login y abrir modal
       setPendingLoginData(data);
       setIsRedirectModalOpen(true);
     } catch (error: any) {
