@@ -153,7 +153,6 @@ const SignUpFormContainer: React.FC<SignUpFormContainerProps> = ({ registerUser 
     <>
       <SignUpForm control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} />
 
-      {/* 🚨 Alerta */}
       <Alert
         type={alert.type}
         title={alert.title}
