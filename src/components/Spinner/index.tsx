@@ -4,11 +4,6 @@ interface SpinnerProps {
   size?: 'small' | 'medium' | 'large';
   color?: string;
 }
-
-/**
- * Componente Spinner centrado con fondo negro transparente
- * @param {SpinnerProps} props - Propiedades del spinner
- */
 const Spinner: React.FC<SpinnerProps> = ({ size = 'medium', color = 'text-blue-500' }) => {
   const sizeClasses = {
     small: 'h-4 w-4',
